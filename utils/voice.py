@@ -60,6 +60,35 @@ def sleep_until(time):
         else:
             # 'logarithmic' sleeping to minimize loop iterations
             sleep(diff / 2)
+            
+def clean(txt):
+  # dict of curse words - key is curse world and value is what to replace it with
+    cDict = {
+    'fuck':'eff',
+    'shit':'pooped',
+    'drug':'d r g',
+    'cunt':'count',
+    ' killed':' unalived',
+    'bitch':'blip',
+    'rape':'rappe',
+    'rapist':'attacker',
+    ' kill':' unalive',
+    'hell':'heck',
+    'masturbate':'whack',
+    'suicide':'unalive',
+    'dick':'meat',
+    'sex':'seggs',
+    ' horny':' excited',
+    'sexual harassment':'unkind behavior' 
+            }
+  # lower text to ensure words are caught regardless of casing in the original post
+    txt = txt.lower()
+  # iterate through dict of curse words and check if any of the keys show up in the text. if so, replace
+    for entry in cDict.keys():
+        if entry in txt:
+            txt = txt.replace(entry, cDict[entry])
+            print('Replaced %s with %s' % (entry, cDict[entry]))
+    return txt
 
 
 def sanitize_text(text: str) -> str:
@@ -85,4 +114,4 @@ def sanitize_text(text: str) -> str:
     result = re.sub(regex_expr, " ", result)
     result = result.replace("+", "plus").replace("&", "and")
     # remove extra whitespace
-    return " ".join(result.split())
+    return clean(" ".join(result.split()))
